@@ -41,12 +41,11 @@ export default function GameGrid({ games, isLoading }: GameGridProps) {
     return () => window.removeEventListener('resize', calculateVisibleGames);
   }, []);
 
-  // 统一布局算法，避免空隙问题
+  // 统一布局算法 - 使用统一的small尺寸保持整齐
   const gameLayout = useMemo(() => {
     const layout: Array<{ game: Game; size: 'small' | 'medium' | 'large'; span: string }> = [];
 
-    // 为了避免空隙，统一使用small尺寸
-    // 这样可以确保所有网格都被完美填充，没有空隙
+    // 所有游戏都使用small尺寸，确保网格整齐统一
     for (let i = 0; i < games.length; i++) {
       const game = games[i];
 
@@ -62,23 +61,17 @@ export default function GameGrid({ games, isLoading }: GameGridProps) {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-6 sm:grid-cols-9 md:grid-cols-12 lg:grid-cols-15 xl:grid-cols-18 gap-1">
-        {Array.from({ length: 48 }).map((_, i) => {
-          const getSizeForIndex = (index: number): string => {
-            const cyclePosition = index % 26;
-            if (cyclePosition === 0) return 'col-span-3 row-span-3';
-            if (cyclePosition === 1 || cyclePosition === 10) return 'col-span-2 row-span-2';
-            return 'col-span-1 row-span-1';
-          };
-          
-          return (
+      <div className="w-full">
+        {/* 使用与实际游戏网格相同的样式 */}
+        <div className="game-grid">
+          {Array.from({ length: 48 }).map((_, i) => (
             <div
               key={i}
-              className={`animate-pulse bg-gray-700/30 rounded-lg ${getSizeForIndex(i)}`}
+              className="grid-item-small animate-pulse bg-gray-700/30 rounded-lg"
               style={{ aspectRatio: '1' }}
             />
-          );
-        })}
+          ))}
+        </div>
       </div>
     );
   }
