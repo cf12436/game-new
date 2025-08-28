@@ -110,6 +110,7 @@ export default function GameGrid({ games, isLoading }: GameGridProps) {
             game={game}
             size={size}
             className={span}
+            priority={index < 12} // 首屏前12个游戏使用优先加载
           />
         ))}
       </div>

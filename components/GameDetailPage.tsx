@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Game } from '@/types/game';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -15,9 +15,73 @@ interface GameDetailPageProps {
 export default function GameDetailPage({ game, relatedGames }: GameDetailPageProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
+  const toggleFullscreen = async () => {
+    if (!isFullscreen) {
+      // 进入全屏模式
+      try {
+        // 尝试使用浏览器原生全屏API
+        if (document.documentElement.requestFullscreen) {
+          await document.documentElement.requestFullscreen();
+        } else if ((document.documentElement as any).webkitRequestFullscreen) {
+          await (document.documentElement as any).webkitRequestFullscreen();
+        } else if ((document.documentElement as any).msRequestFullscreen) {
+          await (document.documentElement as any).msRequestFullscreen();
+        }
+        setIsFullscreen(true);
+      } catch (error) {
+        console.log('浏览器全屏API不可用，使用自定义全屏');
+        setIsFullscreen(true);
+      }
+    } else {
+      // 退出全屏模式
+      try {
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        } else if ((document as any).webkitExitFullscreen) {
+          await (document as any).webkitExitFullscreen();
+        } else if ((document as any).msExitFullscreen) {
+          await (document as any).msExitFullscreen();
+        }
+        setIsFullscreen(false);
+      } catch (error) {
+        console.log('退出浏览器全屏失败，使用自定义退出');
+        setIsFullscreen(false);
+      }
+    }
   };
+
+  // 监听浏览器全屏状态变化和ESC键
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isCurrentlyFullscreen = !!(
+        document.fullscreenElement ||
+        (document as any).webkitFullscreenElement ||
+        (document as any).msFullscreenElement
+      );
+
+      if (!isCurrentlyFullscreen && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('msfullscreenchange', handleFullscreenChange);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('msfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isFullscreen]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -46,17 +110,25 @@ export default function GameDetailPage({ game, relatedGames }: GameDetailPagePro
             <iframe
               src={game.url}
               className="w-full h-full border-0"
-              allow="fullscreen; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allow="fullscreen *; autoplay *; encrypted-media *; gyroscope *; picture-in-picture *; camera *; microphone *; payment *; geolocation *"
               allowFullScreen
               title={game.title}
               loading="lazy"
+              sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation"
+              referrerPolicy="no-referrer-when-downgrade"
             />
             <button
               onClick={toggleFullscreen}
-              className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-lg transition-all duration-200 z-10"
+              className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-3 rounded-lg transition-all duration-200 z-10 backdrop-blur-sm"
+              title="退出全屏"
             >
               <FiMinimize size={20} />
             </button>
+
+            {/* ESC键提示 */}
+            <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-2 rounded-lg text-sm backdrop-blur-sm">
+              按 ESC 键退出全屏
+            </div>
           </div>
         </div>
       )}
@@ -137,16 +209,19 @@ export default function GameDetailPage({ game, relatedGames }: GameDetailPagePro
                 <iframe
                   src={game.url}
                   className="w-full h-full border-0"
-                  allow="fullscreen; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allow="fullscreen *; autoplay *; encrypted-media *; gyroscope *; picture-in-picture *; camera *; microphone *; payment *; geolocation *"
                   allowFullScreen
                   title={game.title}
                   loading="lazy"
+                  sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation"
+                  referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>
-              
+
               <button
                 onClick={toggleFullscreen}
-                className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-lg transition-all duration-200"
+                className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-lg transition-all duration-200 backdrop-blur-sm"
+                title="全屏播放"
               >
                 <FiMaximize size={18} />
               </button>

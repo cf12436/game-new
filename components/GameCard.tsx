@@ -10,9 +10,10 @@ interface GameCardProps {
   game: Game;
   size?: 'small' | 'medium' | 'large';
   className?: string;
+  priority?: boolean; // 用于首屏游戏的优先加载
 }
 
-const GameCard = memo(function GameCard({ game, size = 'medium', className = '' }: GameCardProps) {
+const GameCard = memo(function GameCard({ game, size = 'medium', className = '', priority = false }: GameCardProps) {
   const handleClick = () => {
     console.log('🎮 Game card clicked:', {
       id: game.id,
@@ -40,7 +41,8 @@ const GameCard = memo(function GameCard({ game, size = 'medium', className = '' 
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-110"
           sizes="(max-width: 768px) 16vw, (max-width: 1200px) 12vw, 8vw"
-          loading="lazy"
+          loading={priority ? "eager" : "lazy"}
+          priority={priority}
           quality={75}
           placeholder="blur"
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
