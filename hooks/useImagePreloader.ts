@@ -16,7 +16,7 @@ export function useImagePreloader(games: Game[], preloadCount: number = 30) {
 
     // 分批预加载，避免一次性发起太多请求
     const batchSize = 6;
-    const batches = [];
+    const batches: Game[][] = [];
     for (let i = 0; i < gamesToPreload.length; i += batchSize) {
       batches.push(gamesToPreload.slice(i, i + batchSize));
     }
