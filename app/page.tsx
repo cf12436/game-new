@@ -6,6 +6,7 @@ import CategorySidebar from '@/components/CategorySidebar';
 import GameGrid from '@/components/GameGrid';
 import { Game } from '@/types/game';
 import { fetchGames } from '@/lib/api';
+import { useImagePreloader } from '@/hooks/useImagePreloader';
 
 export default function HomePage() {
   const [games, setGames] = useState<Game[]>([]);
@@ -16,6 +17,9 @@ export default function HomePage() {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+
+  // 预加载首屏游戏图片
+  useImagePreloader(games, 30);
 
   const loadGames = useCallback(async (
     category: string = '', 
@@ -41,6 +45,8 @@ export default function HomePage() {
         setGames(prev => [...prev, ...response.items]);
       } else {
         setGames(response.items);
+        // 首次加载完成后，立即开始预加载图片
+        console.log('🎮 首次游戏数据加载完成，开始预加载图片');
       }
       
       // Check if there are more pages

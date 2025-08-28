@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 导入游戏网格样式 */
+@import '../styles/game-grid.css';
+
 /* Prevent layout shift and improve performance */
 .game-card {
   contain: layout style paint;

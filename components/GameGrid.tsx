@@ -2,7 +2,7 @@
 
 import { Game } from '@/types/game';
 import GameCard from './GameCard';
-import { useMemo } from 'react';
+import { useMemo, useEffect, useRef, useState } from 'react';
 
 interface GameGridProps {
   games: Game[];
@@ -10,52 +10,53 @@ interface GameGridProps {
 }
 
 export default function GameGrid({ games, isLoading }: GameGridProps) {
-  // Perfect tile-packing algorithm inspired by Poki.com
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [visibleCount, setVisibleCount] = useState(30); // 初始显示30个游戏为优先加载
+
+  // 简化的首屏游戏数量计算
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const calculateVisibleGames = () => {
+      const viewportHeight = window.innerHeight;
+      const viewportWidth = window.innerWidth;
+
+      // 简单估算首屏可见游戏数量
+      const estimatedCellSize = viewportWidth >= 1280 ? 140 :
+                               viewportWidth >= 1024 ? 130 :
+                               viewportWidth >= 768 ? 120 :
+                               viewportWidth >= 640 ? 110 : 100;
+
+      const columnsPerRow = Math.floor(viewportWidth / estimatedCellSize);
+      const rowsVisible = Math.ceil(viewportHeight / estimatedCellSize) + 1;
+      const estimatedVisible = columnsPerRow * rowsVisible;
+
+      setVisibleCount(Math.min(estimatedVisible, 48));
+      console.log(`📱 简化计算: ${estimatedVisible}个游戏优先加载`);
+    };
+
+    calculateVisibleGames();
+    window.addEventListener('resize', calculateVisibleGames);
+
+    return () => window.removeEventListener('resize', calculateVisibleGames);
+  }, []);
+
+  // 统一布局算法，避免空隙问题
   const gameLayout = useMemo(() => {
     const layout: Array<{ game: Game; size: 'small' | 'medium' | 'large'; span: string }> = [];
-    
-    // Perfect distribution pattern: 1 large (3x3) + 2 medium (2x2) + 13 small (1x1) = 26 games per cycle
-    // This creates a balanced, visually appealing pattern that fills space efficiently
-    const getSizeForIndex = (index: number): 'small' | 'medium' | 'large' => {
-      const cyclePosition = index % 26;
-      
-      // One 3x3 large tile per cycle (takes 9 grid units)
-      if (cyclePosition === 0) return 'large';
-      
-      // Two 2x2 medium tiles per cycle (takes 4 grid units each = 8 total)
-      if (cyclePosition === 1 || cyclePosition === 10) return 'medium';
-      
-      // Remaining positions are 1x1 small tiles (13 tiles = 13 grid units)
-      return 'small';
-    };
-    
-    // For search results with fewer games, use simpler layout
-    const useSimpleLayout = games.length <= 12;
-    
+
+    // 为了避免空隙，统一使用small尺寸
+    // 这样可以确保所有网格都被完美填充，没有空隙
     for (let i = 0; i < games.length; i++) {
       const game = games[i];
-      let size: 'small' | 'medium' | 'large';
-      
-      if (useSimpleLayout) {
-        // Simple layout: all medium tiles for clean, uniform appearance
-        size = 'medium';
-      } else {
-        // Complex layout for many games
-        size = getSizeForIndex(i);
-      }
-      
-      let span = '';
-      if (size === 'large') {
-        span = 'col-span-3 row-span-3';
-      } else if (size === 'medium') {
-        span = 'col-span-2 row-span-2';
-      } else {
-        span = 'col-span-1 row-span-1';
-      }
-      
-      layout.push({ game, size, span });
+
+      layout.push({
+        game,
+        size: 'small',
+        span: 'grid-item-small'
+      });
     }
-    
+
     return layout;
   }, [games]);
 
@@ -97,22 +98,24 @@ export default function GameGrid({ games, isLoading }: GameGridProps) {
   return (
     <div className="w-full">
       {/* Main Grid - Perfect square grid system like Poki.com */}
-      <div 
-        className="grid grid-cols-6 sm:grid-cols-9 md:grid-cols-12 lg:grid-cols-15 xl:grid-cols-18 gap-1"
-        style={{
-          gridAutoRows: '1fr',
-          minHeight: '100vh'
-        }}
+      <div
+        ref={gridRef}
+        className="game-grid"
       >
-        {gameLayout.map(({ game, size, span }, index) => (
-          <GameCard
-            key={`${game.id}-${index}`}
-            game={game}
-            size={size}
-            className={span}
-            priority={index < 12} // 首屏前12个游戏使用优先加载
-          />
-        ))}
+        {gameLayout.map(({ game, size, span }, index) => {
+          // 使用动态计算的可见数量来决定优先加载
+          const isPriorityLoad = index < visibleCount;
+
+          return (
+            <GameCard
+              key={`${game.id}-${index}`}
+              game={game}
+              size={size}
+              className={span}
+              priority={isPriorityLoad}
+            />
+          );
+        })}
       </div>
 
       {/* Load More Indicator */}

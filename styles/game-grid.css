@@ -1,0 +1,159 @@
+/* 游戏网格布局稳定性样式 */
+
+.game-grid {
+  display: grid;
+  gap: 0.5rem; /* 增加间距到8px */
+  width: 100%;
+  min-height: 100vh;
+  padding: 0.5rem; /* 添加外边距 */
+  /* 强制设置固定的行高，确保布局稳定 */
+  grid-auto-rows: 100px;
+  /* 使用固定列宽 */
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  justify-content: start;
+  align-content: start;
+}
+
+/* 响应式调整 */
+@media (min-width: 640px) {
+  .game-grid {
+    gap: 0.75rem; /* 12px间距 */
+    padding: 0.75rem;
+    grid-auto-rows: 110px;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .game-grid {
+    gap: 1rem; /* 16px间距 */
+    padding: 1rem;
+    grid-auto-rows: 120px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .game-grid {
+    gap: 1rem; /* 16px间距 */
+    padding: 1rem;
+    grid-auto-rows: 130px;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .game-grid {
+    gap: 1.25rem; /* 20px间距 */
+    padding: 1.25rem;
+    grid-auto-rows: 140px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+}
+
+/* 确保所有网格项都有相同的基础高度 */
+.game-grid > * {
+  aspect-ratio: 1;
+  min-height: 0;
+  min-width: 0;
+  /* 强制布局稳定性 */
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+/* 游戏卡片容器 */
+.game-card-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 0.75rem; /* 稍微增加圆角 */
+  background: linear-gradient(135deg, #0a0a0b 0%, #374151 100%);
+  transition: all 0.3s ease;
+  /* 强制布局稳定性 */
+  contain: layout style paint;
+  transform: translateZ(0);
+  box-sizing: border-box;
+  display: block;
+  /* 添加微妙的边框和阴影 */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.game-card-container:hover {
+  transform: scale(1.02);
+  border-color: rgba(6, 182, 212, 0.4); /* 青色边框 */
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(6, 182, 212, 0.2); /* 外发光效果 */
+}
+
+/* 确保图片容器有固定的宽高比 */
+.game-image-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+}
+
+/* 图片加载前的占位符 */
+.game-image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #1f2937 100%);
+  background-size: 200% 200%;
+  animation: shimmer 2s infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  font-size: 2rem;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 200%;
+  }
+  100% {
+    background-position: -200% -200%;
+  }
+}
+
+/* 网格项尺寸类 */
+.grid-item-small {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.grid-item-medium {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.grid-item-large {
+  grid-column: span 3;
+  grid-row: span 3;
+}
+
+/* 确保网格布局稳定 */
+.game-grid::before {
+  content: '';
+  width: 0;
+  padding-bottom: 100%;
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+.game-grid > *:first-child {
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
