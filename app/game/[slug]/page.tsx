@@ -9,12 +9,12 @@ export const runtime = 'edge';
 async function fetchGameByIdDirect(gameId: string): Promise<Game | null> {
   try {
     console.log('🔍 Direct API call for game:', gameId);
-    
-    // Try multiple pages to find the game
+
+    // Try multiple pages to find the game using the correct API endpoint
     for (let page = 1; page <= 3; page++) {
-      const url = `https://api.gamepix.com/v2/games?sid=34E14&pagination=48&page=${page}`;
+      const url = `https://feeds.gamepix.com/v2/json?sid=34E14&pagination=48&page=${page}`;
       console.log(`📡 Fetching page ${page}:`, url);
-      
+
       const response = await fetch(url, {
         headers: {
           'User-Agent': 'GameHub/1.0',
@@ -30,7 +30,7 @@ async function fetchGameByIdDirect(gameId: string): Promise<Game | null> {
 
       const data = await response.json();
       console.log(`📊 Page ${page} returned ${data.items?.length || 0} games`);
-      
+
       if (data.items) {
         const game = data.items.find((g: any) => g.namespace === gameId || g.id === gameId);
         if (game) {
@@ -39,7 +39,7 @@ async function fetchGameByIdDirect(gameId: string): Promise<Game | null> {
         }
       }
     }
-    
+
     console.log('❌ Game not found in any page');
     return null;
   } catch (error) {
@@ -50,7 +50,7 @@ async function fetchGameByIdDirect(gameId: string): Promise<Game | null> {
 
 async function fetchRelatedGamesDirect(category: string = 'action'): Promise<Game[]> {
   try {
-    const url = `https://api.gamepix.com/v2/games?sid=34E14&category=${category}&pagination=12`;
+    const url = `https://feeds.gamepix.com/v2/json?sid=34E14&category=${category}&pagination=12`;
     const response = await fetch(url, {
       headers: {
         'User-Agent': 'GameHub/1.0',
