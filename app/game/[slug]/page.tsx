@@ -1,7 +1,9 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import GameDetailPage from '@/components/GameDetailPage';
-import { fetchGameById, fetchGamesByCategory } from '@/lib/api';
+import { fetchGameById, fetchGames } from '@/lib/api';
+
+export const runtime = 'edge';
 
 interface Props {
   params: { slug: string };
@@ -51,9 +53,9 @@ export default async function GamePage({ params }: Props) {
   }
 
   // Fetch related games from the same category
-  const relatedGames = await fetchGamesByCategory(game.category || 'action', 12);
+  const relatedGames = await fetchGames({ category: game.category || 'action', pagination: 12 });
   // Filter out the current game
-  const filteredRelatedGames = relatedGames.filter(g => g.id !== game.id);
+  const filteredRelatedGames = relatedGames.items.filter((g: any) => g.id !== game.id);
 
   return (
     <GameDetailPage 
