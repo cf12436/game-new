@@ -1,0 +1,610 @@
+[
+    {
+        "tagNamespace": "2048",
+        "title": "2048"
+    },
+    {
+        "tagNamespace": "action",
+        "title": "Action"
+    },
+    {
+        "tagNamespace": "shooter",
+        "title": "Shooter"
+    },
+    {
+        "tagNamespace": "arcade",
+        "title": "Arcade"
+    },
+    {
+        "tagNamespace": "drawing",
+        "title": "Drawing"
+    },
+    {
+        "tagNamespace": "block",
+        "title": "Block"
+    },
+    {
+        "tagNamespace": "stickman",
+        "title": "Stickman"
+    },
+    {
+        "tagNamespace": "adventure",
+        "title": "Adventure"
+    },
+    {
+        "tagNamespace": "ball",
+        "title": "Ball"
+    },
+    {
+        "tagNamespace": "sports",
+        "title": "Sports"
+    },
+    {
+        "tagNamespace": "fighting",
+        "title": "Fighting"
+    },
+    {
+        "tagNamespace": "kids",
+        "title": "Kids"
+    },
+    {
+        "tagNamespace": "memory",
+        "title": "Memory"
+    },
+    {
+        "tagNamespace": "educational",
+        "title": "Educational"
+    },
+    {
+        "tagNamespace": "basketball",
+        "title": "Basketball"
+    },
+    {
+        "tagNamespace": "puzzle",
+        "title": "Puzzle"
+    },
+    {
+        "tagNamespace": "racing",
+        "title": "Racing"
+    },
+    {
+        "tagNamespace": "animal",
+        "title": "Animal"
+    },
+    {
+        "tagNamespace": "fun",
+        "title": "Fun"
+    },
+    {
+        "tagNamespace": "retro",
+        "title": "Retro"
+    },
+    {
+        "tagNamespace": "christmas",
+        "title": "Christmas"
+    },
+    {
+        "tagNamespace": "trivia",
+        "title": "Trivia"
+    },
+    {
+        "tagNamespace": "runner",
+        "title": "Runner"
+    },
+    {
+        "tagNamespace": "golf",
+        "title": "Golf"
+    },
+    {
+        "tagNamespace": "idle",
+        "title": "Idle"
+    },
+    {
+        "tagNamespace": "robots",
+        "title": "Robots"
+    },
+    {
+        "tagNamespace": "strategy",
+        "title": "Strategy"
+    },
+    {
+        "tagNamespace": "parkour",
+        "title": "Parkour"
+    },
+    {
+        "tagNamespace": "board",
+        "title": "Board"
+    },
+    {
+        "tagNamespace": "snake",
+        "title": "Snake"
+    },
+    {
+        "tagNamespace": "platformer",
+        "title": "Platformer"
+    },
+    {
+        "tagNamespace": "match-3",
+        "title": "Match 3"
+    },
+    {
+        "tagNamespace": "monster",
+        "title": "Monster"
+    },
+    {
+        "tagNamespace": "casual",
+        "title": "Casual"
+    },
+    {
+        "tagNamespace": "tanks",
+        "title": "Tanks"
+    },
+    {
+        "tagNamespace": "mobile",
+        "title": "Mobile"
+    },
+    {
+        "tagNamespace": "addictive",
+        "title": "Addictive"
+    },
+    {
+        "tagNamespace": "math",
+        "title": "Math"
+    },
+    {
+        "tagNamespace": "io",
+        "title": "Io"
+    },
+    {
+        "tagNamespace": "halloween",
+        "title": "Halloween"
+    },
+    {
+        "tagNamespace": "clicker",
+        "title": "Clicker"
+    },
+    {
+        "tagNamespace": "hyper-casual",
+        "title": "Hyper casual"
+    },
+    {
+        "tagNamespace": "war",
+        "title": "War"
+    },
+    {
+        "tagNamespace": "scary",
+        "title": "Scary"
+    },
+    {
+        "tagNamespace": "skill",
+        "title": "Skill"
+    },
+    {
+        "tagNamespace": "dinosaur",
+        "title": "Dinosaur"
+    },
+    {
+        "tagNamespace": "two-player",
+        "title": "Two player"
+    },
+    {
+        "tagNamespace": "first-person-shooter",
+        "title": "First person shooter"
+    },
+    {
+        "tagNamespace": "tap",
+        "title": "Tap"
+    },
+    {
+        "tagNamespace": "flight",
+        "title": "Flight"
+    },
+    {
+        "tagNamespace": "driving",
+        "title": "Driving"
+    },
+    {
+        "tagNamespace": "survival",
+        "title": "Survival"
+    },
+    {
+        "tagNamespace": "skibidi-toilet",
+        "title": "Skibidi toilet"
+    },
+    {
+        "tagNamespace": "dirt-bike",
+        "title": "Dirt bike"
+    },
+    {
+        "tagNamespace": "brain",
+        "title": "Brain"
+    },
+    {
+        "tagNamespace": "car",
+        "title": "Car"
+    },
+    {
+        "tagNamespace": "jigsaw-puzzles",
+        "title": "Jigsaw puzzles"
+    },
+    {
+        "tagNamespace": "money",
+        "title": "Money"
+    },
+    {
+        "tagNamespace": "skateboard",
+        "title": "Skateboard"
+    },
+    {
+        "tagNamespace": "music",
+        "title": "Music"
+    },
+    {
+        "tagNamespace": "building",
+        "title": "Building"
+    },
+    {
+        "tagNamespace": "sniper",
+        "title": "Sniper"
+    },
+    {
+        "tagNamespace": "battle",
+        "title": "Battle"
+    },
+    {
+        "tagNamespace": "simulation",
+        "title": "Simulation"
+    },
+    {
+        "tagNamespace": "archery",
+        "title": "Archery"
+    },
+    {
+        "tagNamespace": "granny",
+        "title": "Granny"
+    },
+    {
+        "tagNamespace": "chess",
+        "title": "Chess"
+    },
+    {
+        "tagNamespace": "fashion",
+        "title": "Fashion"
+    },
+    {
+        "tagNamespace": "card",
+        "title": "Card"
+    },
+    {
+        "tagNamespace": "management",
+        "title": "Management"
+    },
+    {
+        "tagNamespace": "zombie",
+        "title": "Zombie"
+    },
+    {
+        "tagNamespace": "escape",
+        "title": "Escape"
+    },
+    {
+        "tagNamespace": "gangster",
+        "title": "Gangster"
+    },
+    {
+        "tagNamespace": "tetris",
+        "title": "Tetris"
+    },
+    {
+        "tagNamespace": "airplane",
+        "title": "Airplane"
+    },
+    {
+        "tagNamespace": "jewel",
+        "title": "Jewel"
+    },
+    {
+        "tagNamespace": "hidden-object",
+        "title": "Hidden object"
+    },
+    {
+        "tagNamespace": "pixel",
+        "title": "Pixel"
+    },
+    {
+        "tagNamespace": "soccer",
+        "title": "Soccer"
+    },
+    {
+        "tagNamespace": "coloring",
+        "title": "Coloring"
+    },
+    {
+        "tagNamespace": "horror",
+        "title": "Horror"
+    },
+    {
+        "tagNamespace": "surgery",
+        "title": "Surgery"
+    },
+    {
+        "tagNamespace": "spinner",
+        "title": "Spinner"
+    },
+    {
+        "tagNamespace": "fishing",
+        "title": "Fishing"
+    },
+    {
+        "tagNamespace": "bowling",
+        "title": "Bowling"
+    },
+    {
+        "tagNamespace": "baseball",
+        "title": "Baseball"
+    },
+    {
+        "tagNamespace": "hunting",
+        "title": "Hunting"
+    },
+    {
+        "tagNamespace": "cats",
+        "title": "Cats"
+    },
+    {
+        "tagNamespace": "classics",
+        "title": "Classics"
+    },
+    {
+        "tagNamespace": "dress-up",
+        "title": "Dress up"
+    },
+    {
+        "tagNamespace": "cooking",
+        "title": "Cooking"
+    },
+    {
+        "tagNamespace": "ninja",
+        "title": "Ninja"
+    },
+    {
+        "tagNamespace": "minecraft",
+        "title": "Minecraft"
+    },
+    {
+        "tagNamespace": "mermaid",
+        "title": "Mermaid"
+    },
+    {
+        "tagNamespace": "games-for-girls",
+        "title": "Games for girls"
+    },
+    {
+        "tagNamespace": "bike",
+        "title": "Bike"
+    },
+    {
+        "tagNamespace": "farming",
+        "title": "Farming"
+    },
+    {
+        "tagNamespace": "baby",
+        "title": "Baby"
+    },
+    {
+        "tagNamespace": "multiplayer",
+        "title": "Multiplayer"
+    },
+    {
+        "tagNamespace": "hair-salon",
+        "title": "Hair salon"
+    },
+    {
+        "tagNamespace": "jumping",
+        "title": "Jumping"
+    },
+    {
+        "tagNamespace": "crazy",
+        "title": "Crazy"
+    },
+    {
+        "tagNamespace": "gun",
+        "title": "Gun"
+    },
+    {
+        "tagNamespace": "pirates",
+        "title": "Pirates"
+    },
+    {
+        "tagNamespace": "bejeweled",
+        "title": "Bejeweled"
+    },
+    {
+        "tagNamespace": "boxing",
+        "title": "Boxing"
+    },
+    {
+        "tagNamespace": "naval",
+        "title": "Naval"
+    },
+    {
+        "tagNamespace": "rpg",
+        "title": "Rpg"
+    },
+    {
+        "tagNamespace": "word",
+        "title": "Word"
+    },
+    {
+        "tagNamespace": "parking",
+        "title": "Parking"
+    },
+    {
+        "tagNamespace": "worm",
+        "title": "Worm"
+    },
+    {
+        "tagNamespace": "offroad",
+        "title": "Offroad"
+    },
+    {
+        "tagNamespace": "ninja-turtle",
+        "title": "Ninja turtle"
+    },
+    {
+        "tagNamespace": "wrestling",
+        "title": "Wrestling"
+    },
+    {
+        "tagNamespace": "battle-royale",
+        "title": "Battle royale"
+    },
+    {
+        "tagNamespace": "tycoon",
+        "title": "Tycoon"
+    },
+    {
+        "tagNamespace": "mining",
+        "title": "Mining"
+    },
+    {
+        "tagNamespace": "truck",
+        "title": "Truck"
+    },
+    {
+        "tagNamespace": "flash",
+        "title": "Flash"
+    },
+    {
+        "tagNamespace": "solitaire",
+        "title": "Solitaire"
+    },
+    {
+        "tagNamespace": "princess",
+        "title": "Princess"
+    },
+    {
+        "tagNamespace": "world-cup",
+        "title": "World cup"
+    },
+    {
+        "tagNamespace": "cricket",
+        "title": "Cricket"
+    },
+    {
+        "tagNamespace": "sword",
+        "title": "Sword"
+    },
+    {
+        "tagNamespace": "bubble-shooter",
+        "title": "Bubble shooter"
+    },
+    {
+        "tagNamespace": "drifting",
+        "title": "Drifting"
+    },
+    {
+        "tagNamespace": "pool",
+        "title": "Pool"
+    },
+    {
+        "tagNamespace": "police",
+        "title": "Police"
+    },
+    {
+        "tagNamespace": "mario",
+        "title": "Mario"
+    },
+    {
+        "tagNamespace": "mahjong",
+        "title": "Mahjong"
+    },
+    {
+        "tagNamespace": "makeup",
+        "title": "Makeup"
+    },
+    {
+        "tagNamespace": "mmorpg",
+        "title": "Mmorpg"
+    },
+    {
+        "tagNamespace": "dragons",
+        "title": "Dragons"
+    },
+    {
+        "tagNamespace": "checkers",
+        "title": "Checkers"
+    },
+    {
+        "tagNamespace": "anime",
+        "title": "Anime"
+    },
+    {
+        "tagNamespace": "coding",
+        "title": "Coding"
+    },
+    {
+        "tagNamespace": "gdevelop",
+        "title": "Gdevelop"
+    },
+    {
+        "tagNamespace": "cool",
+        "title": "Cool"
+    },
+    {
+        "tagNamespace": "restaurant",
+        "title": "Restaurant"
+    },
+    {
+        "tagNamespace": "junior",
+        "title": "Junior"
+    },
+    {
+        "tagNamespace": "scrabble",
+        "title": "Scrabble"
+    },
+    {
+        "tagNamespace": "hockey",
+        "title": "Hockey"
+    },
+    {
+        "tagNamespace": "horse",
+        "title": "Horse"
+    },
+    {
+        "tagNamespace": "fire-and-water",
+        "title": "Fire and water"
+    },
+    {
+        "tagNamespace": "knight",
+        "title": "Knight"
+    },
+    {
+        "tagNamespace": "city-building",
+        "title": "City building"
+    },
+    {
+        "tagNamespace": "barbie",
+        "title": "Barbie"
+    },
+    {
+        "tagNamespace": "piano",
+        "title": "Piano"
+    },
+    {
+        "tagNamespace": "sharks",
+        "title": "Sharks"
+    },
+    {
+        "tagNamespace": "open-world",
+        "title": "Open world"
+    },
+    {
+        "tagNamespace": "family",
+        "title": "Family"
+    },
+    {
+        "tagNamespace": "helicopter",
+        "title": "Helicopter"
+    }
+]

@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prevent layout shift and improve performance */
+.game-card {
+  contain: layout style paint;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Ensure consistent grid behavior */
+.grid {
+  contain: layout;
+  transform: translateZ(0);
+}
+
+/* Optimize image loading */
+img {
+  content-visibility: auto;
+  transform: translateZ(0);
+}
+
+/* Reduce scroll jank */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-float,
+  .animate-pulse,
+  .animate-spin {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+}
+
+/* Custom gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:root {
+  --gaming-purple: #6366f1;
+  --gaming-cyan: #06b6d4;
+  --gaming-green: #10b981;
+  --gaming-dark: #0f0f23;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%),
+    linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  min-height: 100vh;
+  animation: bgShift 20s ease-in-out infinite;
+}
+
+@keyframes bgShift {
+  0%, 100% { 
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%),
+      linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  }
+  50% { 
+    background: 
+      radial-gradient(circle at 80% 20%, rgba(120, 119, 198, 0.4) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(255, 119, 198, 0.4) 0%, transparent 50%),
+      radial-gradient(circle at 60% 60%, rgba(120, 219, 255, 0.3) 0%, transparent 50%),
+      linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1b4b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #06b6d4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0891b2;
+}
+
+/* Game card hover effects */
+@layer components {
+  .game-card {
+    @apply relative overflow-hidden rounded-lg transition-all duration-300 ease-in-out cursor-pointer;
+    /* Perfect grid alignment */
+    box-sizing: border-box;
+  }
+  
+  /* Optional: Grid visualization for development */
+  .debug-grid .game-card {
+    outline: 1px solid rgba(255, 0, 0, 0.2);
+  }
+  
+  .game-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(6, 182, 212, 0.1) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+    z-index: 1;
+  }
+  
+  .game-card:hover::before {
+    transform: translateX(100%);
+  }
+  
+  .glow-effect {
+    @apply shadow-lg;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, #06b6d4, #6366f1, #ec4899);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient 3s ease infinite;
+  }
+  
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+}
