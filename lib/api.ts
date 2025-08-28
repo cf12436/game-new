@@ -5,8 +5,10 @@ const getAPIBase = () => {
     // Client-side
     return '/api/games';
   }
-  // Server-side - use absolute URL for fetch
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  // Server-side - try multiple ways to get the base URL
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+                  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 
+                  'https://game-new-cf12436.pages.dev';
   return `${baseUrl}/api/games`;
 };
 
