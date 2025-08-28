@@ -2,6 +2,7 @@
 
 import { Game } from '@/types/game';
 import GameCard from './GameCard';
+import LoadingSpinner from './LoadingSpinner';
 import { useMemo, useEffect, useRef, useState } from 'react';
 
 interface GameGridProps {
@@ -62,14 +63,29 @@ export default function GameGrid({ games, isLoading }: GameGridProps) {
   if (isLoading) {
     return (
       <div className="w-full">
-        {/* 使用与实际游戏网格相同的样式 */}
-        <div className="game-grid">
+        {/* 炫酷的加载动画 */}
+        <div className="flex flex-col items-center justify-center py-20">
+          <LoadingSpinner size="large" text="正在加载精彩游戏..." />
+        </div>
+
+        {/* 骨架屏效果 */}
+        <div className="game-grid mt-8">
           {Array.from({ length: 48 }).map((_, i) => (
             <div
               key={i}
-              className="grid-item-small animate-pulse bg-gray-700/30 rounded-lg"
+              className="grid-item-small relative overflow-hidden bg-gradient-to-br from-gray-800/40 to-gray-900/40 rounded-lg border border-gray-700/30"
               style={{ aspectRatio: '1' }}
-            />
+            >
+              {/* 骨架屏动画 */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-600/20 to-transparent animate-pulse"
+                   style={{
+                     animation: `shimmer 2s infinite`,
+                     animationDelay: `${i * 50}ms`
+                   }} />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-8 h-8 text-gray-600">🎮</div>
+              </div>
+            </div>
           ))}
         </div>
       </div>

@@ -4,6 +4,9 @@ import { useState, useEffect, useCallback } from 'react';
 import Header from '@/components/Header';
 import CategorySidebar from '@/components/CategorySidebar';
 import GameGrid from '@/components/GameGrid';
+import ParticleBackground from '@/components/ParticleBackground';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import RippleButton from '@/components/RippleButton';
 import { Game } from '@/types/game';
 import { fetchGames } from '@/lib/api';
 import { useImagePreloader } from '@/hooks/useImagePreloader';
@@ -130,6 +133,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-dark relative overflow-hidden">
+      {/* 粒子背景 */}
+      <ParticleBackground />
+
       {/* Animated Background */}
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-dark"></div>
@@ -187,14 +193,16 @@ export default function HomePage() {
 
             {/* Error State */}
             {error && (
-              <div className="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-center">
-                <p className="text-red-300">{error}</p>
-                <button
+              <div className="mb-6 p-6 bg-red-500/20 border border-red-500/50 rounded-xl text-center backdrop-blur-sm">
+                <div className="text-4xl mb-3">😵</div>
+                <p className="text-red-300 mb-4">{error}</p>
+                <RippleButton
                   onClick={() => loadGames(selectedCategory, searchQuery, 1, false)}
-                  className="mt-2 px-4 py-2 bg-red-500/30 hover:bg-red-500/50 rounded-lg transition-colors"
+                  variant="secondary"
+                  size="medium"
                 >
-                  Try Again
-                </button>
+                  🔄 重新尝试
+                </RippleButton>
               </div>
             )}
 
@@ -204,9 +212,8 @@ export default function HomePage() {
             {/* Loading More Indicator */}
             {loading && games.length > 0 && (
               <div className="flex justify-center mt-8">
-                <div className="inline-flex items-center space-x-2 bg-gaming-purple/20 rounded-full px-6 py-3">
-                  <div className="w-4 h-4 border-2 border-gaming-purple border-t-transparent rounded-full animate-spin" />
-                  <span className="text-gaming-purple font-medium">Loading more games...</span>
+                <div className="bg-gaming-dark/60 backdrop-blur-sm border border-gaming-purple/30 rounded-xl p-6">
+                  <LoadingSpinner size="medium" text="加载更多精彩游戏..." />
                 </div>
               </div>
             )}
