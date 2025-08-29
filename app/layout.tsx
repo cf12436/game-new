@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   creator: 'Game Hub',
   publisher: 'Game Hub',
   icons: {
-    icon: '/icon.ico',
+    icon: '/favicon.ico',
   },
   formatDetection: {
     email: false,
