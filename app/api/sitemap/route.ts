@@ -50,7 +50,7 @@ async function getQualityGames(count: number): Promise<any[]> {
 
 export async function GET() {
   const baseUrl = SITEMAP_CONFIG.BASE_URL;
-  const currentDate = new Date().toISOString();
+  const currentDate = new Date().toISOString().split('T')[0]; // 格式化为 YYYY-MM-DD
   const currentGameCount = sitemapManager.getCurrentGameCount();
   
   console.log(`🗺️ 生成站点地图，当前游戏数量: ${currentGameCount}`);

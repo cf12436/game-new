@@ -46,7 +46,7 @@ export class SitemapManager {
    */
   getCurrentGameCount(): number {
     const now = new Date();
-    const startDate = new Date('2025-01-01'); // 项目开始日期
+    const startDate = new Date('2025-08-29'); // 项目实际开始日期
     const daysSinceStart = Math.floor((now.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
     
     // 每incrementDays天增加一批
@@ -100,7 +100,7 @@ export class SitemapManager {
           category: game.category || 'games',
           quality_score: game.quality_score,
           keywords,
-          lastmod: game.date_modified || new Date().toISOString(),
+          lastmod: this.formatSitemapDate(game.date_modified),
           priority: this.calculatePriority(game.quality_score, game.category)
         });
       }
@@ -137,6 +137,29 @@ export class SitemapManager {
     }
     
     return keywords.slice(0, 5); // 限制关键词数量
+  }
+
+  /**
+   * 格式化站点地图日期为标准格式
+   * 确保符合XML站点地图规范 (YYYY-MM-DD)
+   */
+  private formatSitemapDate(dateString?: string): string {
+    try {
+      if (!dateString) {
+        return new Date().toISOString().split('T')[0];
+      }
+      
+      // 解析日期并格式化为 YYYY-MM-DD
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        return new Date().toISOString().split('T')[0];
+      }
+      
+      return date.toISOString().split('T')[0];
+    } catch (error) {
+      // 如果日期解析失败，返回当前日期
+      return new Date().toISOString().split('T')[0];
+    }
   }
 
   /**
@@ -197,7 +220,7 @@ export class SitemapManager {
     const progress = (currentCount / this.config.maxGameCount) * 100;
     
     const now = new Date();
-    const startDate = new Date('2025-01-01');
+    const startDate = new Date('2025-08-29'); // 项目实际开始日期
     const daysSinceStart = Math.floor((now.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
     const nextIncrementDays = this.config.incrementDays - (daysSinceStart % this.config.incrementDays);
     
