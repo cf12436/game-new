@@ -5,6 +5,7 @@ import { Game } from '@/types/game';
 import Link from 'next/link';
 import Image from 'next/image';
 import GameCard from './GameCard';
+import LanguageSelector from './LanguageSelector';
 import { FiArrowLeft, FiMaximize, FiMinimize, FiStar, FiCalendar, FiTag, FiHome } from 'react-icons/fi';
 
 interface GameDetailPageProps {
@@ -14,6 +15,9 @@ interface GameDetailPageProps {
 
 export default function GameDetailPage({ game, relatedGames }: GameDetailPageProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [translatedDescription, setTranslatedDescription] = useState<string>('');
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('');
 
   const toggleFullscreen = async () => {
     if (!isFullscreen) {
@@ -99,6 +103,43 @@ export default function GameDetailPage({ game, relatedGames }: GameDetailPagePro
     if (score >= 0.8) return 'text-green-400';
     if (score >= 0.6) return 'text-yellow-400';
     return 'text-red-400';
+  };
+
+  const handleLanguageSelect = async (language: { code: string; name: string; nativeName: string }) => {
+    if (!game.description) return;
+    
+    setIsTranslating(true);
+    setSelectedLanguage(language.name);
+    
+    try {
+      const response = await fetch('/api/translate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: game.description,
+          targetLanguage: language.name,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Translation failed');
+      }
+
+      const data = await response.json();
+      setTranslatedDescription(data.translatedText);
+    } catch (error) {
+      console.error('Translation error:', error);
+      setTranslatedDescription('Translation failed. Please try again.');
+    } finally {
+      setIsTranslating(false);
+    }
+  };
+
+  const resetTranslation = () => {
+    setTranslatedDescription('');
+    setSelectedLanguage('');
   };
 
   return (
@@ -229,8 +270,43 @@ export default function GameDetailPage({ game, relatedGames }: GameDetailPagePro
 
             {/* Game Description */}
             <div className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10">
-              <h2 className="text-xl font-semibold mb-4">About This Game</h2>
-              <p className="text-gray-300 leading-relaxed mb-4">{game.description}</p>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold">About This Game</h2>
+                <div className="flex items-center space-x-3">
+                  {translatedDescription && (
+                    <button
+                      onClick={resetTranslation}
+                      className="text-sm text-gaming-cyan hover:text-cyan-300 transition-colors"
+                    >
+                      Show Original
+                    </button>
+                  )}
+                  <LanguageSelector 
+                    onLanguageSelect={handleLanguageSelect}
+                    isTranslating={isTranslating}
+                  />
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                {isTranslating ? (
+                  <div className="flex items-center space-x-3 text-gaming-purple">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gaming-purple"></div>
+                    <span>Translating to {selectedLanguage}...</span>
+                  </div>
+                ) : translatedDescription ? (
+                  <div>
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className="text-sm text-gaming-purple font-medium">
+                        Translated to {selectedLanguage}:
+                      </span>
+                    </div>
+                    <p className="text-gray-300 leading-relaxed">{translatedDescription}</p>
+                  </div>
+                ) : (
+                  <p className="text-gray-300 leading-relaxed">{game.description}</p>
+                )}
+              </div>
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
                 <div>
