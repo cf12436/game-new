@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   authors: [{ name: 'Game Hub' }],
   creator: 'Game Hub',
   publisher: 'Game Hub',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
   formatDetection: {
     email: false,
     address: false,
@@ -20,6 +25,7 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: true,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
