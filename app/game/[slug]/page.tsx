@@ -5,17 +5,17 @@ import { Game } from '@/types/game';
 
 export const runtime = 'edge';
 
-// Direct API call to avoid internal routing issues in Edge Runtime
+// Direct API call using correct search and game detail APIs
 async function fetchGameByIdDirect(gameId: string): Promise<Game | null> {
   try {
-    console.log('🔍 Direct API call for game:', gameId);
+    console.log('🔍 Fetching game details for:', gameId);
 
-    // Try multiple pages to find the game using the correct API endpoint
-    for (let page = 1; page <= 3; page++) {
-      const url = `https://feeds.gamepix.com/v2/json?sid=34E14&pagination=48&page=${page}`;
-      console.log(`📡 Fetching page ${page}:`, url);
-
-      const response = await fetch(url, {
+    // Step 1: 直接尝试获取游戏详情（如果已知namespace）
+    try {
+      const gameDetailUrl = `https://feeds.gamepix.com/v2/games/${gameId}`;
+      console.log(`📡 Fetching game details:`, gameDetailUrl);
+      
+      const detailResponse = await fetch(gameDetailUrl, {
         headers: {
           'User-Agent': 'GameHub/1.0',
           'Accept': 'application/json',
@@ -23,27 +23,67 @@ async function fetchGameByIdDirect(gameId: string): Promise<Game | null> {
         next: { revalidate: 300 },
       });
 
-      if (!response.ok) {
-        console.error(`❌ API error on page ${page}: ${response.status}`);
-        continue;
-      }
-
-      const data = await response.json();
-      console.log(`📊 Page ${page} returned ${data.items?.length || 0} games`);
-
-      if (data.items) {
-        const game = data.items.find((g: any) => g.namespace === gameId || g.id === gameId);
-        if (game) {
-          console.log('✅ Game found:', { id: game.id, namespace: game.namespace, title: game.title });
-          return game;
+      if (detailResponse.ok) {
+        const gameData = await detailResponse.json();
+        if (gameData && gameData.namespace === gameId) {
+          console.log('✅ Game found via direct API:', { id: gameData.id, namespace: gameData.namespace, title: gameData.title });
+          return gameData;
         }
       }
+    } catch (directError) {
+      console.log('⚠️ Direct game API failed, trying search');
     }
 
-    console.log('❌ Game not found in any page');
+    // Step 2: 使用搜索API查找游戏
+    try {
+      const searchUrl = `https://api.gamepix.com/v3/games/search/partners?ts=${encodeURIComponent(gameId)}`;
+      console.log(`🔍 Searching for game:`, searchUrl);
+      
+      const searchResponse = await fetch(searchUrl, {
+        headers: {
+          'User-Agent': 'GameHub/1.0',
+          'Accept': 'application/json',
+        },
+        next: { revalidate: 300 },
+      });
+
+      if (searchResponse.ok) {
+        const searchData = await searchResponse.json();
+        if (searchData.items && searchData.items.length > 0) {
+          // 查找匹配的游戏
+          const matchedGame = searchData.items.find((item: any) => 
+            item.gameNamespace === gameId || item.gameNamespace?.includes(gameId)
+          );
+          
+          if (matchedGame) {
+            console.log('🎯 Found game in search results:', matchedGame.gameNamespace);
+            
+            // Step 3: 使用找到的namespace获取完整游戏信息
+            const gameDetailUrl = `https://feeds.gamepix.com/v2/games/${matchedGame.gameNamespace}`;
+            const detailResponse = await fetch(gameDetailUrl, {
+              headers: {
+                'User-Agent': 'GameHub/1.0',
+                'Accept': 'application/json',
+              },
+              next: { revalidate: 300 },
+            });
+
+            if (detailResponse.ok) {
+              const gameData = await detailResponse.json();
+              console.log('✅ Game details retrieved:', { id: gameData.id, namespace: gameData.namespace, title: gameData.title });
+              return gameData;
+            }
+          }
+        }
+      }
+    } catch (searchError) {
+      console.error('❌ Search API failed:', searchError);
+    }
+
+    console.log('❌ Game not found');
     return null;
   } catch (error) {
-    console.error('💥 Error in direct API call:', error);
+    console.error('💥 Error in fetchGameByIdDirect:', error);
     return null;
   }
 }
