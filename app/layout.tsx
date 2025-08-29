@@ -9,9 +9,6 @@ export const metadata: Metadata = {
   authors: [{ name: 'Game Hub' }],
   creator: 'Game Hub',
   publisher: 'Game Hub',
-  icons: {
-    icon: '/favicon.ico',
-  },
   formatDetection: {
     email: false,
     address: false,
