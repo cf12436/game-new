@@ -2,13 +2,13 @@
 
 .game-grid {
   display: grid;
-  gap: 0.5rem; /* 8px间距 */
+  gap: 0.75rem; /* 12px间距 */
   width: 100%;
   min-height: 100vh;
-  padding: 0.5rem; /* 添加外边距 */
+  padding: 0.75rem; /* 添加外边距 */
   /* 使用固定列数，确保卡片大小一致 */
-  grid-template-columns: repeat(6, 1fr); /* 6列固定布局 */
-  grid-auto-rows: minmax(80px, auto);
+  grid-template-columns: repeat(4, 1fr); /* 4列固定布局 - 增大卡片 */
+  grid-auto-rows: minmax(120px, auto);
   justify-content: start;
   align-content: start;
 }
@@ -16,37 +16,37 @@
 /* 响应式调整 - 使用固定列数 */
 @media (min-width: 640px) {
   .game-grid {
-    gap: 0.75rem; /* 12px间距 */
-    padding: 0.75rem;
-    grid-template-columns: repeat(8, 1fr); /* 8列 */
-    grid-auto-rows: minmax(90px, auto);
+    gap: 1rem; /* 16px间距 */
+    padding: 1rem;
+    grid-template-columns: repeat(5, 1fr); /* 5列 */
+    grid-auto-rows: minmax(140px, auto);
   }
 }
 
 @media (min-width: 768px) {
   .game-grid {
-    gap: 1rem; /* 16px间距 */
-    padding: 1rem;
-    grid-template-columns: repeat(10, 1fr); /* 10列 */
-    grid-auto-rows: minmax(100px, auto);
+    gap: 1.25rem; /* 20px间距 */
+    padding: 1.25rem;
+    grid-template-columns: repeat(6, 1fr); /* 6列 */
+    grid-auto-rows: minmax(160px, auto);
   }
 }
 
 @media (min-width: 1024px) {
   .game-grid {
-    gap: 1rem; /* 16px间距 */
-    padding: 1rem;
-    grid-template-columns: repeat(12, 1fr); /* 12列 */
-    grid-auto-rows: minmax(110px, auto);
+    gap: 1.5rem; /* 24px间距 */
+    padding: 1.5rem;
+    grid-template-columns: repeat(7, 1fr); /* 7列 */
+    grid-auto-rows: minmax(180px, auto);
   }
 }
 
 @media (min-width: 1280px) {
   .game-grid {
-    gap: 1.25rem; /* 20px间距 */
-    padding: 1.25rem;
-    grid-template-columns: repeat(14, 1fr); /* 14列 */
-    grid-auto-rows: minmax(120px, auto);
+    gap: 1.75rem; /* 28px间距 */
+    padding: 1.75rem;
+    grid-template-columns: repeat(8, 1fr); /* 8列 */
+    grid-auto-rows: minmax(200px, auto);
   }
 }
 
