@@ -5,6 +5,8 @@ import Header from '@/components/Header';
 import CategorySidebar from '@/components/CategorySidebar';
 import GameGrid from '@/components/GameGrid';
 import ParticleBackground from '@/components/ParticleBackground';
+import NeonGridBackground from '@/components/NeonGridBackground';
+import FloatingCubes from '@/components/FloatingCubes';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import RippleButton from '@/components/RippleButton';
 import { Game } from '@/types/game';
@@ -49,7 +51,7 @@ export default function HomePage() {
       } else {
         setGames(response.items);
         // 首次加载完成后，立即开始预加载图片
-        console.log('🎮 首次游戏数据加载完成，开始预加载图片');
+        // console.log('🎮 首次游戏数据加载完成，开始预加载图片');
       }
       
       // Check if there are more pages
@@ -133,16 +135,30 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-dark relative overflow-hidden">
-      {/* 粒子背景 */}
-      <ParticleBackground />
-
-      {/* Animated Background */}
+      {/* 多层炫酷背景效果 */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-dark"></div>
-        <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
+        {/* 基础渐变背景 */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900/20 to-cyan-900/20"></div>
+
+        {/* 霓虹网格背景 */}
+        <NeonGridBackground />
+
+        {/* 3D浮动立方体 */}
+        <FloatingCubes />
+
+        {/* 粒子网络背景 */}
+        <ParticleBackground />
+
+        {/* 动态光晕效果 */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gaming-purple/10 rounded-full blur-3xl animate-float"></div>
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gaming-cyan/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
         <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-gaming-green/10 rounded-full blur-3xl animate-float" style={{animationDelay: '4s'}}></div>
+        <div className="absolute top-3/4 left-1/3 w-72 h-72 bg-gaming-pink/8 rounded-full blur-3xl animate-float" style={{animationDelay: '6s'}}></div>
+
+        {/* 扫描线效果 */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gaming-cyan/5 to-transparent animate-pulse"></div>
+        </div>
       </div>
       
       {/* Content */}

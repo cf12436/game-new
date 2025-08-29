@@ -29,7 +29,7 @@ export default function GameDetailPage({ game, relatedGames }: GameDetailPagePro
         }
         setIsFullscreen(true);
       } catch (error) {
-        console.log('浏览器全屏API不可用，使用自定义全屏');
+        // console.log('浏览器全屏API不可用，使用自定义全屏');
         setIsFullscreen(true);
       }
     } else {
@@ -44,7 +44,7 @@ export default function GameDetailPage({ game, relatedGames }: GameDetailPagePro
         }
         setIsFullscreen(false);
       } catch (error) {
-        console.log('退出浏览器全屏失败，使用自定义退出');
+        // console.log('退出浏览器全屏失败，使用自定义退出');
         setIsFullscreen(false);
       }
     }

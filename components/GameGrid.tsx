@@ -33,7 +33,7 @@ export default function GameGrid({ games, isLoading }: GameGridProps) {
       const estimatedVisible = columnsPerRow * rowsVisible;
 
       setVisibleCount(Math.min(estimatedVisible, 48));
-      console.log(`📱 简化计算: ${estimatedVisible}个游戏优先加载`);
+      // console.log(`📱 简化计算: ${estimatedVisible}个游戏优先加载`);
     };
 
     calculateVisibleGames();

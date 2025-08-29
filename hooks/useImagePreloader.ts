@@ -9,7 +9,7 @@ export function useImagePreloader(games: Game[], preloadCount: number = 30) {
   useEffect(() => {
     if (games.length === 0) return;
 
-    console.log(`🚀 开始预加载前${preloadCount}个游戏图片`);
+    // console.log(`🚀 开始预加载前${preloadCount}个游戏图片`);
 
     // 预加载前N个游戏的图片
     const gamesToPreload = games.slice(0, preloadCount);
@@ -33,18 +33,18 @@ export function useImagePreloader(games: Game[], preloadCount: number = 30) {
           const img = new window.Image();
 
           img.onload = () => {
-            console.log(`✅ 批次${batchIndex + 1}-${index + 1} 预加载成功: ${game.title}`);
+            // console.log(`✅ 批次${batchIndex + 1}-${index + 1} 预加载成功: ${game.title}`);
             resolve();
           };
 
           img.onerror = () => {
-            console.warn(`⚠️ 批次${batchIndex + 1}-${index + 1} 预加载失败: ${game.title}`);
+            // console.warn(`⚠️ 批次${batchIndex + 1}-${index + 1} 预加载失败: ${game.title}`);
             resolve(); // 即使失败也resolve，不阻塞其他图片
           };
 
           // 设置超时，避免长时间等待
           setTimeout(() => {
-            console.warn(`⏰ 批次${batchIndex + 1}-${index + 1} 预加载超时: ${game.title}`);
+            // console.warn(`⏰ 批次${batchIndex + 1}-${index + 1} 预加载超时: ${game.title}`);
             resolve();
           }, 3000); // 减少超时时间到3秒
 
@@ -70,7 +70,7 @@ export function useImagePreloader(games: Game[], preloadCount: number = 30) {
         }
       }
 
-      console.log(`🎮 所有批次预加载完成: ${totalSuccess}/${gamesToPreload.length}`);
+      // console.log(`🎮 所有批次预加载完成: ${totalSuccess}/${gamesToPreload.length}`);
     };
 
     executeBatches();

@@ -17,13 +17,13 @@ const GameCard = memo(function GameCard({ game, size = 'medium', className = '',
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleClick = () => {
-    console.log('🎮 Game card clicked:', {
-      id: game.id,
-      namespace: game.namespace,
-      title: game.title,
-      routeUrl: `/game/${game.namespace}`,
-      gameIframeUrl: game.url
-    });
+    // console.log('🎮 Game card clicked:', {
+    //   id: game.id,
+    //   namespace: game.namespace,
+    //   title: game.title,
+    //   routeUrl: `/game/${game.namespace}`,
+    //   gameIframeUrl: game.url
+    // });
   };
 
   return (
@@ -53,7 +53,7 @@ const GameCard = memo(function GameCard({ game, size = 'medium', className = '',
               unoptimized={false}
               onLoad={() => {
                 setImageLoaded(true);
-                if (priority) console.log(`🎮 图片加载完成: ${game.title}`);
+                // if (priority) console.log(`🎮 图片加载完成: ${game.title}`);
               }}
             />
           </div>

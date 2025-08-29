@@ -41,26 +41,26 @@ export async function fetchGames(filters: GameFilters = {}): Promise<GamesRespon
 
 export async function fetchGameById(id: string): Promise<Game | null> {
   try {
-    console.log('📡 fetchGameById called with ID:', id);
+    // console.log('📡 fetchGameById called with ID:', id);
     const apiBase = getAPIBase();
     const url = `${apiBase}/${encodeURIComponent(id)}`;
-    console.log('🌐 API URL constructed:', url);
-    
+    // console.log('🌐 API URL constructed:', url);
+
     const response = await fetch(url, {
       next: { revalidate: 300 }
     });
-    console.log('📊 API Response status:', response.status, response.statusText);
-    
+    // console.log('📊 API Response status:', response.status, response.statusText);
+
     if (!response.ok) {
       if (response.status === 404) {
-        console.log('🔍 Game not found (404)');
+        // console.log('🔍 Game not found (404)');
         return null;
       }
       console.error(`❌ API error for game ${id}: ${response.status}`);
       return null;
     }
     const data = await response.json();
-    console.log('✅ Game data received:', data ? { id: data.id, namespace: data.namespace, title: data.title } : 'null');
+    // console.log('✅ Game data received:', data ? { id: data.id, namespace: data.namespace, title: data.title } : 'null');
     return data;
   } catch (error) {
     console.error('💥 Error fetching game by ID:', error);
