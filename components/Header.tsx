@@ -34,6 +34,7 @@ export default function Header({ onSearchChange, onCategoryToggle, isCategoryOpe
           <div className="flex items-center space-x-6">
             {/* Category Toggle Button */}
             <button
+              data-category-toggle
               onClick={onCategoryToggle}
               className="p-2 rounded-lg bg-gaming-purple/20 hover:bg-gaming-purple/30 transition-colors duration-200"
               aria-label="Toggle categories"

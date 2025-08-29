@@ -10,13 +10,15 @@ interface CategorySidebarProps {
   selectedCategory?: string;
   onCategorySelect: (category: string) => void;
   onClose: () => void;
+  onToggle: () => void;
 }
 
 export default function CategorySidebar({ 
   isOpen, 
   selectedCategory, 
   onCategorySelect, 
-  onClose 
+  onClose,
+  onToggle
 }: CategorySidebarProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredCategories, setFilteredCategories] = useState<GameCategory[]>(categories);
@@ -51,11 +53,37 @@ export default function CategorySidebar({
         />
       )}
 
+      {/* Sidebar Tab - Always visible when closed */}
+      {!isOpen && (
+        <div
+          data-sidebar-tab
+          className="fixed top-1/2 left-0 transform -translate-y-1/2 z-40 cursor-pointer group"
+          onClick={onToggle}
+        >
+          <div className="bg-gaming-purple/80 backdrop-blur-sm border border-gaming-purple/30 rounded-r-lg px-2 py-6 shadow-lg transition-all duration-300 hover:bg-gaming-purple/90 hover:px-3 hover:shadow-xl">
+            <div className="flex flex-col items-center space-y-3">
+              <FiFilter className="text-white group-hover:scale-110 transition-transform duration-200" size={20} />
+              <div className="flex flex-col items-center space-y-1">
+                {['C', 'A', 'T', 'E', 'G', 'O', 'R', 'I', 'E', 'S'].map((letter, index) => (
+                  <span key={index} className="text-xs text-white font-medium tracking-wider">
+                    {letter}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Sidebar */}
       <div
-        className={`fixed md:sticky top-0 left-0 h-screen w-80 bg-gaming-dark/95 backdrop-blur-sm border-r border-gaming-purple/20 z-50 transform transition-transform duration-300 ease-in-out ${
-          isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-        } ${isOpen ? 'md:block' : 'md:hidden'}`}
+        data-sidebar
+        className={`fixed top-20 left-0 h-[calc(100vh-80px)] w-80 bg-gaming-dark/95 backdrop-blur-sm border-r border-gaming-purple/20 z-40 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        } ${isOpen ? 'md:translate-x-0' : 'md:-translate-x-full'}`}
+        onMouseEnter={() => {
+          // 保持侧边栏打开状态当鼠标悬停在上面
+        }}
       >
         <div className="p-4 h-full flex flex-col">
           {/* Header */}

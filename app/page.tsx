@@ -20,8 +20,49 @@ export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [isHoveringLeft, setIsHoveringLeft] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+
+  // 鼠标悬停自动显示/隐藏侧边栏和点击外部关闭
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      // 检测鼠标是否在屏幕左侧边缘（50px内）
+      const isNearLeftEdge = e.clientX <= 50;
+      setIsHoveringLeft(isNearLeftEdge);
+      
+      // 桌面端自动显示/隐藏侧边栏
+      if (window.innerWidth >= 768) {
+        if (isNearLeftEdge) {
+          setIsCategoryOpen(true);
+        } else if (e.clientX > 320) { // 鼠标离开侧边栏区域
+          setIsCategoryOpen(false);
+        }
+      }
+    };
+
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Element;
+      const sidebar = document.querySelector('[data-sidebar]');
+      const toggleButton = document.querySelector('[data-category-toggle]');
+      const sidebarTab = target.closest('[data-sidebar-tab]');
+      
+      // 如果点击的不是侧边栏内部、切换按钮或侧边栏标签，则关闭侧边栏
+      if (sidebar && !sidebar.contains(target) && 
+          toggleButton && !toggleButton.contains(target) && 
+          !sidebarTab) {
+        setIsCategoryOpen(false);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('click', handleClickOutside);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   // 预加载首屏游戏图片
   useImagePreloader(games, 30);
@@ -78,6 +119,12 @@ export default function HomePage() {
     setPage(1);
     setGames([]);
     loadGames(category, searchQuery, 1, false);
+    
+    // Scroll to top when category changes
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }, [searchQuery, loadGames]);
 
   // Handle search change with debounce
@@ -177,10 +224,13 @@ export default function HomePage() {
           selectedCategory={selectedCategory}
           onCategorySelect={handleCategorySelect}
           onClose={() => setIsCategoryOpen(false)}
+          onToggle={() => setIsCategoryOpen(!isCategoryOpen)}
         />
 
         {/* Main Content */}
-        <main className="flex-1 min-h-[calc(100vh-80px)]">
+        <main className={`flex-1 min-h-[calc(100vh-80px)] transition-all duration-300 ${
+          isCategoryOpen ? 'md:ml-80' : 'md:ml-0'
+        }`}>
           <div className="container mx-auto px-3 py-4">
             {/* Hero Section */}
             <div className="mb-6 text-center bg-gaming-dark/40 backdrop-blur-sm border border-gaming-purple/20 rounded-xl shadow-lg p-6">
