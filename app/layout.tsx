@@ -44,9 +44,6 @@ export const metadata: Metadata = {
     title: 'Game Hub - Best Free Online Games',
     description: 'Play thousands of free online games including action, puzzle, racing, sports and more. No downloads required!',
   },
-  alternates: {
-    canonical: 'https://game-hub.site',
-  },
 };
 
 export default function RootLayout({
@@ -57,10 +54,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-        <link rel="apple-touch-icon" href="/favicon.ico" />
-        <link rel="canonical" href="https://game-hub.site" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0f0f23" />
       </head>
