@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# 站点地图
+Sitemap: https://game-hub.site/api/sitemap
+
+# 禁止爬取的路径
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# 爬取延迟（毫秒）
+Crawl-delay: 1
